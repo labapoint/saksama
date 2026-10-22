@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+dist/
+
+# Hasil kerja agent di workspace (dibuat catat.py saat demo)
+workspace/rencana/*.json
+workspace/outbox/*.json
+workspace/.workbuddy-ai/

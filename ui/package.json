@@ -1,0 +1,24 @@
+{
+  "name": "saksama-ui",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1"
+  },
+  "dependencies": {
+    "@fontsource-variable/dm-sans": "5.2.8",
+    "lucide-react": "1.14.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "4.2.4",
+    "@vitejs/plugin-react": "6.0.1",
+    "tailwindcss": "4.2.4",
+    "vite": "8.3.0",
+    "vite-plugin-svgr": "5.2.0"
+  }
+}

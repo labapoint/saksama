@@ -1,0 +1,191 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1050" width="1600" height="1050" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+    <marker id="ahm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#DC2626"/>
+    </marker>
+    <marker id="aho" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#B45309"/>
+    </marker>
+  </defs>
+  <style>
+    .h{font-size:17px;font-weight:700;fill:#0F172A}
+    .r{font-size:13px;font-style:italic;fill:#475569}
+    .b{font-size:14px;fill:#0F172A}
+    .s{font-size:13px;fill:#334155}
+    .k{font-size:13px;font-weight:700;fill:#0F172A}
+    .lbl{font-size:13px;fill:#0F172A;font-weight:600}
+    .red{font-size:13px;fill:#B91C1C;font-weight:600}
+    .ora{font-size:12.5px;fill:#92400E;font-weight:700}
+    .ln{stroke:#334155;stroke-width:2;fill:none}
+    .lnr{stroke:#DC2626;stroke-width:2;stroke-dasharray:7 5;fill:none}
+    .lno{stroke:#B45309;stroke-width:2.5;fill:none}
+  </style>
+
+  <rect width="1600" height="1050" fill="#FFFFFF"/>
+
+  <!-- Judul -->
+  <text x="40" y="48" font-size="26" font-weight="700" fill="#0F172A">Saksama: arsitektur dan batas kepercayaan</text>
+  <text x="40" y="76" class="s">Agent menyusun rencana. Manusia memutuskan. Kode menjalankan dan mencatat. Semua data fiktif, eksekusi hanya simulasi ke outbox/.</text>
+
+  <!-- Catatan T17 -->
+  <rect x="1120" y="24" width="440" height="56" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+  <text x="1132" y="47" class="red">T17: saat script error, agent memakai python3 -S</text>
+  <text x="1132" y="67" class="red">untuk mematikan shim sandbox (lalu diingat, T18/T22)</text>
+
+  <!-- MANUSIA -->
+  <rect x="40" y="140" width="260" height="250" rx="14" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
+  <text x="58" y="170" class="h">Manusia (3 peran)</text>
+  <text x="58" y="192" class="r">Memberi perintah dan izin</text>
+  <text x="58" y="220" class="b">• Owner (Bu Sari): semua aksi</text>
+  <text x="58" y="244" class="b">• Kepala cabang: aksi di</text>
+  <text x="72" y="264" class="b">cabangnya sendiri</text>
+  <text x="58" y="288" class="b">• Kasir: hanya lihat stok</text>
+  <text x="58" y="318" class="s">Mengirim chat atau voice note,</text>
+  <text x="58" y="336" class="s">diawali "Pengirim: &lt;nama&gt;"</text>
+  <text x="58" y="370" class="k" fill="#1D4ED8">Hanya manusia yang bisa menyetujui</text>
+
+  <!-- SANDBOX -->
+  <rect x="330" y="110" width="860" height="580" rx="18" fill="#F8FAFC" stroke="#2563EB" stroke-width="2.5" stroke-dasharray="12 7"/>
+  <rect x="350" y="98" width="400" height="26" fill="#FFFFFF"/>
+  <text x="358" y="117" class="lbl" fill="#1D4ED8">BATAS 1 · Sandbox WorkBuddy (satu folder kerja)</text>
+
+  <!-- AGENT -->
+  <rect x="370" y="150" width="310" height="160" rx="12" fill="#FFFFFF" stroke="#334155" stroke-width="2"/>
+  <text x="388" y="178" class="h">Agent WorkBuddy</text>
+  <text x="388" y="199" class="r">DeepSeek-V4.1-Flash + Skill asisten-owner</text>
+  <text x="388" y="226" class="b">• Memahami chat / voice note</text>
+  <text x="388" y="250" class="b">• Bertanya kalau ambigu</text>
+  <text x="388" y="274" class="b">• Meneruskan konfirmasi dan</text>
+  <text x="402" y="294" class="b">balasan, tanpa mengubahnya</text>
+
+  <!-- CATAT.PY -->
+  <rect x="800" y="150" width="370" height="210" rx="12" fill="#FFFBEB" stroke="#B45309" stroke-width="3"/>
+  <text x="818" y="178" class="h">catat.py · BATAS 2</text>
+  <text x="818" y="199" class="r">Gerbang persetujuan: rencana → setujui → jalankan</text>
+  <text x="818" y="226" class="b">• Hanya peminta/owner boleh menyetujui</text>
+  <text x="818" y="250" class="b">• Balasan wajib baku: "setuju 1,3"</text>
+  <text x="818" y="274" class="b">• Di bawah HPP: wajib "setuju rugi n"</text>
+  <text x="818" y="298" class="b">• Kedaluwarsa 30 menit, cek ulang</text>
+  <text x="818" y="322" class="b">• Log berisi fakta, ditulis kode</text>
+  <text x="818" y="346" class="b">• Setiap persetujuan ditandatangani</text>
+
+  <!-- CEK_ATURAN -->
+  <rect x="370" y="345" width="310" height="160" rx="12" fill="#FFFFFF" stroke="#334155" stroke-width="2"/>
+  <text x="388" y="373" class="h">cek_aturan.py</text>
+  <text x="388" y="394" class="r">Menghitung dengan pasti, tanpa AI</text>
+  <text x="388" y="420" class="b">• Stok, harga vs HPP, piutang</text>
+  <text x="388" y="444" class="b">• Jadwal, libur, zona waktu</text>
+  <text x="388" y="468" class="b">• Izin tiap peran (hanya membaca)</text>
+  <text x="388" y="492" class="b">• Opsi alternatif yang sudah dicek</text>
+
+  <!-- DATA -->
+  <rect x="370" y="532" width="310" height="148" rx="12" fill="#F1F5F9" stroke="#64748B" stroke-width="2"/>
+  <text x="388" y="558" class="h">data/</text>
+  <text x="388" y="578" class="r">CSV, semuanya fiktif</text>
+  <text x="388" y="603" class="b">• Kontak dan izin per peran</text>
+  <text x="388" y="625" class="b">• Cabang, libur, zona waktu</text>
+  <text x="388" y="647" class="b">• Stok, harga dan HPP, piutang</text>
+  <text x="388" y="668" class="s">  + lampiran dokumen (notulen, dll.)</text>
+
+  <!-- HASIL -->
+  <rect x="800" y="430" width="370" height="240" rx="12" fill="#FFFFFF" stroke="#334155" stroke-width="2"/>
+  <text x="818" y="458" class="h">Hasil dan jejak audit</text>
+  <text x="818" y="479" class="r">Hanya ditulis oleh catat.py</text>
+  <text x="818" y="506" class="b">• outbox/: aksi yang sudah disetujui</text>
+  <text x="832" y="526" class="s">(simulasi, tidak ada yang terkirim)</text>
+  <text x="818" y="552" class="b">• rencana/: status tiap rencana</text>
+  <text x="818" y="578" class="b">• log.csv: siapa meminta, data apa</text>
+  <text x="832" y="598" class="b">yang dibaca, keputusan, penyetuju</text>
+  <text x="818" y="626" class="b">• "periksa": deteksi file palsu</text>
+  <text x="832" y="646" class="b">atau yang diubah</text>
+
+  <!-- DI LUAR SANDBOX -->
+  <rect x="1230" y="140" width="330" height="200" rx="12" fill="#F0FDF4" stroke="#15803D" stroke-width="2"/>
+  <text x="1248" y="168" class="h">Di luar sandbox</text>
+  <text x="1248" y="189" class="r">Dipegang manusia, agent tidak diberi akses</text>
+  <text x="1248" y="216" class="b">• Kunci tanda tangan</text>
+  <text x="1262" y="236" class="s">~/.asisten-owner/kunci</text>
+  <text x="1248" y="264" class="b">• Arsip hasil tiap kasus uji</text>
+  <text x="1262" y="284" class="s">log, outbox, rencana, memori</text>
+
+  <!-- Panah alur -->
+  <path class="ln" d="M300 200 L368 200" marker-end="url(#ah)"/>
+  <text x="306" y="191" class="lbl">1 minta</text>
+  <path class="ln" d="M368 280 L302 280" marker-end="url(#ah)"/>
+  <text x="306" y="300" class="s">konfirmasi</text>
+
+  <path class="lno" d="M680 200 L798 200" marker-end="url(#aho)"/>
+  <text x="688" y="191" class="ora">2 cek · 3 rencana</text>
+  <path class="lno" d="M680 240 L798 240" marker-end="url(#aho)"/>
+  <text x="688" y="232" class="ora">4 balasan</text>
+  <path class="ln" d="M798 285 L682 285" marker-end="url(#ah)"/>
+  <text x="688" y="303" class="s">3 layar konfirmasi</text>
+
+  <path class="ln" d="M845 360 L682 405" marker-end="url(#ah)"/>
+  <text x="742" y="400" class="s">panggil</text>
+  <path class="ln" d="M525 505 L525 528" marker-end="url(#ah)"/>
+  <text x="535" y="522" class="s">baca sesuai izin</text>
+
+  <path class="lno" d="M985 360 L985 428" marker-end="url(#aho)"/>
+  <text x="995" y="388" class="ora">5 cek ulang, jalankan</text>
+  <text x="995" y="408" class="ora">6 catat, tanda tangan</text>
+
+  <path class="ln" d="M1170 220 L1228 220" marker-end="url(#ah)"/>
+  <text x="1176" y="211" class="s">kunci</text>
+
+  <!-- Celah (merah) -->
+  <path class="lnr" d="M395 310 C340 380 340 500 390 540" marker-end="url(#ahm)"/>
+  <text x="150" y="430" class="red">T25/T28: agent bisa baca</text>
+  <text x="150" y="448" class="red">CSV langsung, tanpa</text>
+  <text x="150" y="466" class="red">gerbang dan tanpa log</text>
+  <path class="lnr" d="M660 150 C760 112 1000 90 1118 60" marker-end="url(#ahm)"/>
+
+  <!-- PRODUKSI -->
+  <rect x="40" y="720" width="1520" height="220" rx="18" fill="#FFFFFF" stroke="#0F172A" stroke-width="2"/>
+  <text x="60" y="752" class="h">Kalau jadi fitur Labapoint (produksi): agent tidak pernah memegang file data atau kunci</text>
+
+  <rect x="60" y="775" width="260" height="140" rx="12" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
+  <text x="78" y="803" class="h">Owner / staf</text>
+  <text x="78" y="831" class="b">• Aplikasi Labapoint</text>
+  <text x="92" y="851" class="b">atau WhatsApp</text>
+  <text x="78" y="877" class="b">• Identitas dari login,</text>
+  <text x="92" y="897" class="b">bukan dari teks pesan</text>
+
+  <rect x="380" y="775" width="280" height="140" rx="12" fill="#FFFFFF" stroke="#334155" stroke-width="2"/>
+  <text x="398" y="803" class="h">Asisten (LLM)</text>
+  <text x="398" y="831" class="b">• Hanya memanggil alat API</text>
+  <text x="398" y="857" class="b">• Memakai izin si penanya</text>
+  <text x="398" y="883" class="b">• Tidak melihat file data</text>
+
+  <rect x="720" y="775" width="380" height="140" rx="12" fill="#FFFBEB" stroke="#B45309" stroke-width="3"/>
+  <text x="738" y="803" class="h">Edge Function (server)</text>
+  <text x="738" y="831" class="b">• Rencana, persetujuan, tanda tangan</text>
+  <text x="738" y="857" class="b">• Cek ulang sebelum dijalankan</text>
+  <text x="738" y="883" class="b">• Eksekusi lewat form yang sudah ada</text>
+  <text x="752" y="903" class="s">(Pengiriman Stok, Ubah Harga Massal)</text>
+
+  <rect x="1160" y="775" width="380" height="140" rx="12" fill="#F0FDF4" stroke="#15803D" stroke-width="2"/>
+  <text x="1178" y="803" class="h">Database Labapoint</text>
+  <text x="1178" y="831" class="b">• Row Level Security menyaring</text>
+  <text x="1192" y="851" class="b">data sesuai izin penanya</text>
+  <text x="1178" y="877" class="b">• Izin per peran yang sudah ada</text>
+  <text x="1178" y="903" class="b">• audit_log yang sudah ada</text>
+
+  <path class="ln" d="M320 845 L378 845" marker-end="url(#ah)"/>
+  <path class="ln" d="M660 845 L718 845" marker-end="url(#ah)"/>
+  <path class="ln" d="M1100 845 L1158 845" marker-end="url(#ah)"/>
+
+  <!-- Legenda -->
+  <line x1="40" y1="985" x2="90" y2="985" class="ln"/>
+  <text x="100" y="990" class="s">alur normal</text>
+  <line x1="210" y1="985" x2="260" y2="985" class="lno"/>
+  <text x="270" y="990" class="s">lewat gerbang persetujuan (ditegakkan kode)</text>
+  <line x1="610" y1="985" x2="660" y2="985" class="lnr"/>
+  <text x="670" y="990" class="s">celah yang kami temukan saat uji (lihat accountability sheet)</text>
+  <rect x="1110" y="973" width="22" height="22" fill="none" stroke="#2563EB" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="1142" y="990" class="s">batas kepercayaan</text>
+  <text x="40" y="1028" class="s">Urutan: 1 permintaan · 2 cek aturan · 3 rencana + layar konfirmasi · 4 balasan manusia diteruskan apa adanya (sah atau tidaknya diputuskan catat.py, bukan model) · 5 cek ulang lalu jalankan · 6 catat + tanda tangan</text>
+</svg>
