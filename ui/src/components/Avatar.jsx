@@ -1,4 +1,4 @@
-// Foto profil kontak demo (foto stok Magnific/Freepik, lisensi gratis, lihat src/assets/avatars/SUMBER.md).
+// Foto profil opsional dari src/assets/avatars/<nama-kontak>.jpg (tidak masuk repo); tanpa foto, avatar memakai inisial.
 // Nama di luar daftar jatuh ke inisial.
 const FOTO = import.meta.glob('../assets/avatars/*.jpg', { eager: true, import: 'default' })
 

@@ -96,4 +96,4 @@ Dari file sesi hanya diambil teks pesan pengguna dan balasan akhir agent. Person
 
 ## Aset
 
-Logo dan ikon menu di `ui/src/assets/logo/` dan `ui/src/assets/nav/` adalah merek milik Labapoint dan tidak termasuk lisensi kode repo ini. Ikon antarmuka di `ui/src/assets/icons/` berasal dari [Iconly](https://iconly.pro) dan tunduk pada lisensi Iconly. Sumber foto profil dicatat di [ui/src/assets/avatars/SUMBER.md](ui/src/assets/avatars/SUMBER.md).
+Logo dan ikon menu di `ui/src/assets/logo/` dan `ui/src/assets/nav/` adalah merek milik Labapoint dan tidak termasuk lisensi kode repo ini. Ikon antarmuka di `ui/src/assets/icons/` berasal dari [Iconly](https://iconly.pro) dan tunduk pada lisensi Iconly.
