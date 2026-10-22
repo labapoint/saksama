@@ -79,6 +79,7 @@ Perilaku Saksama dibentuk oleh tiga lapis instruksi, dan pengujian kami menunjuk
 - **Owner tetap memegang kendali.** Satu layar konfirmasi menggantikan berpindah ke beberapa halaman aplikasi, tetapi tidak ada yang terjadi tanpa persetujuannya.
 - **Siap jadi fitur produk nyata.** Proyek ini lahir dari Labapoint, aplikasi POS multi-cabang untuk UMKM Indonesia yang sudah berjalan. Labapoint sudah punya izin per peran, Row Level Security, dan audit log. Agent cukup memanggil API dengan izin si penanya, dan layar konfirmasinya adalah form yang sudah ada (Pengiriman Stok, Ubah Harga Massal).
 - **Siap untuk aturan baru.** Jejak audit lengkap dan pembatasan per peran sejalan dengan kewajiban penilaian dampak perlindungan data.
+- **Langkah berikutnya.** Pindahkan data dan gerbang ke server supaya agent hanya bisa memanggil alat, tidak membaca file (menutup batas baca T25/T28). Tambah aksi baru yang lahir dari uji: harga promo dengan tanggal berakhir yang kembali otomatis (T21), serta pembatalan atau koreksi transfer yang juga lewat persetujuan (T30).
 
 ### Data dan keamanan
 

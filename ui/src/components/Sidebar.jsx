@@ -1,4 +1,4 @@
-import { Sun, Moon } from 'lucide-react'
+import { Lightbulb, Monitor, Moon, Sun, X } from './Ikon.jsx'
 import DashboardIcon from '../assets/nav/dashboard.svg?react'
 import PosIcon from '../assets/nav/pos.svg?react'
 import OrdersIcon from '../assets/nav/orders.svg?react'
@@ -16,16 +16,13 @@ import logoMarkWhite from '../assets/logo/logo-collapse-white.svg'
 
 // Menu meniru tampilan aplikasi Labapoint; hanya "AI" yang berfungsi di demo ini.
 export const NAV = [
+  // Grup tanpa label: Asisten AI berdiri sendiri di paling atas.
+  { id: 'utama', items: [{ id: 'ai', label: 'Asisten AI', icon: AiIcon }] },
   {
-    label: 'Utama',
+    id: 'lainnya',
+    label: 'Lainnya',
     items: [
       { id: 'dashboard', label: 'Dashboard', icon: DashboardIcon },
-      { id: 'ai', label: 'Asisten AI', icon: AiIcon, badge: 'Baru' },
-    ],
-  },
-  {
-    label: 'Operasional',
-    items: [
       { id: 'pos', label: 'Kasir', icon: PosIcon },
       { id: 'orders', label: 'Pesanan', icon: OrdersIcon },
       { id: 'products', label: 'Produk & Stok', icon: ProductsIcon },
@@ -35,6 +32,39 @@ export const NAV = [
     ],
   },
 ]
+
+// Pilihan tema gaya PillTabs: ikut sistem (default) lebih dulu, lalu terang dan gelap.
+// Vertikal di sidebar ciut, horizontal saat sidebar lebar.
+const OPSI_TEMA = [
+  { id: 'sistem', label: 'Ikut sistem', Icon: Monitor },
+  { id: 'terang', label: 'Mode terang', Icon: Sun },
+  { id: 'gelap', label: 'Mode gelap', Icon: Moon },
+]
+
+function PilihTema({ tema, onChange, horizontal }) {
+  return (
+    <div role="radiogroup" aria-label="Tema" className={'flex gap-1 rounded-xl border p-1 ' + (horizontal ? 'flex-row' : 'flex-col')} style={{ borderColor: 'var(--color-app-line)', background: 'var(--card)' }}>
+      {OPSI_TEMA.map(({ id, label, Icon }) => {
+        const aktif = tema === id
+        return (
+          <button
+            key={id}
+            type="button"
+            role="radio"
+            aria-checked={aktif}
+            aria-label={label}
+            title={label}
+            onClick={() => onChange(id)}
+            className="flex size-9 items-center justify-center rounded-lg transition-colors"
+            style={aktif ? { background: 'var(--color-primary-12)', color: 'var(--color-primary-text)' } : { color: 'var(--color-app-muted)' }}
+          >
+            <Icon className="size-[18px]" />
+          </button>
+        )
+      })}
+    </div>
+  )
+}
 
 // Logo resmi Labapoint:
 // wide max 32×150px, mark 32×32px. Varian putih di mode gelap.
@@ -81,11 +111,11 @@ function Item({ item, active, collapsed, onSelect }) {
   )
 }
 
-export default function Sidebar({ active, collapsed, onSelect, onToggle, dark, onToggleDark }) {
+export default function Sidebar({ active, collapsed, onSelect, onToggle, dark, tema, onTema, onPanduan, diDrawer = false }) {
   return (
     <aside
       className={
-        'flex h-full shrink-0 flex-col border-r transition-[width] duration-150 ' +
+        'group/sidebar relative flex h-full shrink-0 flex-col border-r transition-[width] duration-150 ' +
         (collapsed ? 'w-[72px]' : 'w-[240px]')
       }
       style={{ background: 'var(--color-sidebar-bg)', borderColor: 'var(--color-sidebar-border)' }}
@@ -100,23 +130,23 @@ export default function Sidebar({ active, collapsed, onSelect, onToggle, dark, o
         {!collapsed && (
           <button
             type="button"
-            aria-label="Ciutkan sidebar"
+            aria-label={diDrawer ? 'Tutup menu' : 'Ciutkan sidebar'}
             onClick={onToggle}
             className="rounded-md p-1.5 hover:bg-[var(--color-sidebar-hover)]"
             style={{ color: 'var(--color-sidebar-muted)' }}
           >
-            <CollapseIcon className="size-[18px]" />
+            {diDrawer ? <X className="size-5" /> : <CollapseIcon className="size-[18px]" />}
           </button>
         )}
       </div>
 
       <nav className="flex-1 overflow-y-auto py-4">
-        {NAV.map((group) => (
-          <div key={group.label} className={collapsed ? 'mb-4 px-2' : 'mb-6 px-3'}>
+        {NAV.map((group, i) => (
+          <div key={group.id} className={collapsed ? 'mb-4 px-2' : 'mb-6 px-3'}>
             {collapsed ? (
-              <div className="mx-auto mb-2 h-px w-8" style={{ background: 'var(--color-sidebar-border)' }} />
+              i > 0 && <div className="mx-auto mb-2 h-px w-8" style={{ background: 'var(--color-sidebar-border)' }} />
             ) : (
-              <div
+              group.label && <div
                 className="px-3 py-1 text-[11px] font-semibold uppercase tracking-wider"
                 style={{ color: 'var(--color-sidebar-muted)' }}
               >
@@ -133,30 +163,41 @@ export default function Sidebar({ active, collapsed, onSelect, onToggle, dark, o
       </nav>
 
       <div
-        className={'flex gap-1 border-t py-3 ' + (collapsed ? 'flex-col items-center px-2' : 'px-3')}
+        className={'flex flex-col gap-2 border-t py-3 ' + (collapsed ? 'items-center px-2' : 'px-4')}
         style={{ borderColor: 'var(--color-sidebar-border)' }}
       >
         <button
           type="button"
-          aria-label={dark ? 'Mode terang' : 'Mode gelap'}
-          onClick={onToggleDark}
-          className="flex size-10 items-center justify-center rounded-md hover:bg-[var(--color-sidebar-hover)]"
+          onClick={onPanduan}
+          title={collapsed ? 'Lihat panduan halaman' : undefined}
+          aria-label="Lihat panduan halaman"
+          className={
+            'flex items-center rounded-md text-sm font-medium transition-colors hover:bg-[var(--color-sidebar-hover)] ' +
+            (collapsed ? 'size-10 justify-center' : 'w-full gap-3 px-3 py-2')
+          }
           style={{ color: 'var(--color-sidebar-fg)' }}
         >
-          {dark ? <Sun className="size-[18px]" /> : <Moon className="size-[18px]" />}
+          <Lightbulb className={collapsed ? 'size-[22px]' : 'size-[18px]'} />
+          {!collapsed && <span>Lihat panduan</span>}
         </button>
-        {collapsed && (
-          <button
-            type="button"
-            aria-label="Lebarkan sidebar"
-            onClick={onToggle}
-            className="flex size-10 items-center justify-center rounded-md hover:bg-[var(--color-sidebar-hover)]"
-            style={{ color: 'var(--color-sidebar-fg)' }}
-          >
-            <ExpandIcon className="size-[18px]" />
-          </button>
-        )}
+        <PilihTema tema={tema} onChange={onTema} horizontal={!collapsed} />
       </div>
+
+      {/* Sama dengan Labapoint: tombol lebarkan menempel di perbatasan dan hanya tampak saat sidebar di-hover.
+          top-[26px]: pusat tombol 28px jatuh di 40px = pusat logo dalam header 80px. */}
+      {collapsed && (
+        <button
+          type="button"
+          onClick={onToggle}
+          title="Lebarkan sidebar"
+          aria-label="Lebarkan sidebar"
+          aria-expanded={false}
+          className="pointer-events-none absolute -right-3.5 top-[26px] z-10 flex size-7 items-center justify-center rounded-full border opacity-0 transition-opacity duration-150 group-hover/sidebar:pointer-events-auto group-hover/sidebar:opacity-100 focus-visible:pointer-events-auto focus-visible:opacity-100"
+          style={{ background: '#ffffff', borderColor: 'var(--color-app-line)', color: '#334155', boxShadow: '0 1px 4px rgba(16, 24, 40, 0.14)' }}
+        >
+          <ExpandIcon className="size-4" />
+        </button>
+      )}
     </aside>
   )
 }

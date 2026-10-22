@@ -32,7 +32,7 @@ export default function Markdown({ teks }) {
     }
   }
   return (
-    <div className="flex flex-col gap-2 text-sm">
+    <div className="flex flex-col gap-2 text-[15px] leading-[22px]">
       {blok.map((b, i) => {
         if (b.jenis === 'p') return <p key={i}>{b.isi.flatMap((l, j) => (j ? [<br key={`br-${j}`} />, ...inline(l, `${i}-${j}`)] : inline(l, `${i}-${j}`)))}</p>
         if (b.jenis === 'ul' || b.jenis === 'ol') {

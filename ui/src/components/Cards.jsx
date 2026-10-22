@@ -1,18 +1,4 @@
-import {
-  ArrowRight,
-  BadgeCheck,
-  CircleCheck,
-  CircleX,
-  FileText,
-  Lock,
-  ShieldAlert,
-  ShieldCheck,
-  TriangleAlert,
-  Truck,
-  Tag,
-  Send,
-  CalendarClock,
-} from 'lucide-react'
+import { ArrowRight, Calendar, Close, DangerTriangle, Discount, Document, Lock, Send, ShieldDone, ShieldFail, Swap, TickSquare } from './Ikon.jsx'
 import { infoKeputusan, jam } from '../lib/feed.js'
 import logoPutih from '../assets/logo/logo-collapse-white.svg'
 import Markdown from '../lib/markdown.jsx'
@@ -42,7 +28,7 @@ export function StatusChip({ keputusan }) {
   return <Chip tone={k.tone}>{k.label}</Chip>
 }
 
-const IKON_AKSI = { transfer_stok: Truck, ubah_harga: Tag, pesan_tagihan: FileText, kirim_pesan: Send, jadwalkan: CalendarClock }
+const IKON_AKSI = { transfer_stok: Swap, ubah_harga: Discount, pesan_tagihan: Document, kirim_pesan: Send, jadwalkan: Calendar }
 const LABEL_AKSI = { transfer_stok: 'Transfer stok', ubah_harga: 'Ubah harga', pesan_tagihan: 'Pesan tagihan', kirim_pesan: 'Kirim pesan', jadwalkan: 'Jadwal' }
 
 // Balasan agent berlatar abu-abu tanpa border; status cukup lewat chip kecil supaya tidak ramai warna.
@@ -73,14 +59,14 @@ export function Pesan({ ev }) {
   return (
     <div className="flex justify-end">
       <div className="max-w-[80%]">
-        <div className="rounded-xl px-4 py-3" style={{ background: 'var(--color-chat-user)', color: 'var(--color-app-text)' }}>
+        <div data-tur="pesan" className="rounded-xl px-4 py-3" style={{ background: 'var(--color-chat-user)', color: 'var(--color-app-text)' }}>
           <div className="mb-1 flex items-center gap-1.5 text-xs" style={{ color: 'var(--color-app-muted)' }}>
             <span className="font-semibold" style={{ color: 'var(--color-app-text)' }}>{ev.dari}</span>
             {ev.peran && <span>· {ev.peran}</span>}
             <span className="tabular-nums">· {jam(ev.waktu)}</span>
             {ev.kanal && <span>· via {LABEL_KANAL[ev.kanal]}</span>}
           </div>
-          <div className="whitespace-pre-wrap text-sm">{ev.teks}</div>
+          <div className="whitespace-pre-wrap text-[15px] leading-[22px]">{ev.teks}</div>
         </div>
       </div>
     </div>
@@ -114,7 +100,7 @@ export function KartuRencana({ r }) {
         </div>
         <div className="flex flex-col gap-2">
           {r.aksi.map((a) => {
-            const Ikon = IKON_AKSI[a.jenis] || FileText
+            const Ikon = IKON_AKSI[a.jenis] || Document
             const ok = a.cek?.status === 'ok'
             const peringatan = a.cek?.status === 'peringatan'
             return (
@@ -132,7 +118,7 @@ export function KartuRencana({ r }) {
                   <StatusChip keputusan={a.status} />
                 </div>
                 <div className="mt-2 flex items-start gap-1.5 text-sm" style={{ color: ok ? 'var(--color-app-muted)' : peringatan ? '#b45309' : 'var(--color-app-danger)' }}>
-                  {ok ? <CircleCheck className="mt-0.5 size-4 shrink-0" style={{ color: 'var(--color-app-success)' }} /> : peringatan ? <TriangleAlert className="mt-0.5 size-4 shrink-0" /> : <CircleX className="mt-0.5 size-4 shrink-0" />}
+                  {ok ? <TickSquare className="mt-0.5 size-4 shrink-0" style={{ color: 'var(--color-app-success)' }} /> : peringatan ? <DangerTriangle className="mt-0.5 size-4 shrink-0" /> : <Close className="mt-0.5 size-4 shrink-0" />}
                   <span>{a.cek?.alasan}</span>
                 </div>
                 {a.cek?.sumber?.length > 0 && (
@@ -146,7 +132,7 @@ export function KartuRencana({ r }) {
         </div>
         {r.catatan && (
           <div className="mt-3 flex items-start gap-2 rounded-lg p-2.5 text-sm" style={{ background: 'var(--color-danger-bg)', color: 'var(--color-app-danger)' }}>
-            <ShieldAlert className="mt-0.5 size-4 shrink-0" />
+            <ShieldFail className="mt-0.5 size-4 shrink-0" />
             <span>{r.catatan}</span>
           </div>
         )}
@@ -161,7 +147,7 @@ export function KartuHasil({ h, stok, produk }) {
       <Card>
         <div className="mb-3 flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 text-sm font-bold">
-            <BadgeCheck className="size-4" style={{ color: 'var(--color-app-success)' }} />
+            <TickSquare className="size-4" style={{ color: 'var(--color-app-success)' }} />
             Hasil setelah dijalankan
           </div>
           <Waktu iso={h.waktu} />
@@ -226,7 +212,7 @@ export function KartuSistem({ ev }) {
   return (
     <div className="flex justify-center">
       <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs" style={{ background: TONE[ev.tone].bg, color: TONE[ev.tone].fg }}>
-        <CircleCheck className="size-3.5" />
+        <TickSquare className="size-3.5" />
         {ev.teks}
       </span>
     </div>
@@ -267,7 +253,7 @@ export function KartuCatatan({ g }) {
         </div>
         {injeksi && (
           <div className="mb-1 flex items-start gap-1.5 text-sm font-semibold" style={{ color: 'var(--color-app-danger)' }}>
-            <ShieldAlert className="mt-0.5 size-4 shrink-0" /> Instruksi tersembunyi diabaikan
+            <ShieldFail className="mt-0.5 size-4 shrink-0" /> Instruksi tersembunyi diabaikan
           </div>
         )}
         <div className="flex flex-col gap-1 text-sm">
@@ -311,7 +297,7 @@ export function KartuBalasan({ ev }) {
         <div className="mt-3 flex flex-col gap-1 border-t pt-2 text-xs" style={{ borderColor: 'var(--color-app-line)', color: 'var(--color-app-muted)' }}>
           {ev.gerbang?.length > 0 && (
             <div className="flex items-center gap-1.5">
-              <ShieldCheck className="size-3.5 shrink-0" />
+              <ShieldDone className="size-3.5 shrink-0" />
               <span>
                 Diperiksa gerbang: {[...new Set(ev.gerbang.map((b) => infoKeputusan(b.keputusan).label))].join(', ')} · tercatat di log.csv
               </span>

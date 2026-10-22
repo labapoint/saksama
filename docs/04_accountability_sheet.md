@@ -1,65 +1,48 @@
 # Accountability Sheet: Saksama, Asisten Toko Multicabang
 
-**Versi:** demo hackathon, 21 Okt 2026 · **Penanggung jawab:** Salis (pengembang Labapoint) · **Platform:** WorkBuddy, model DeepSeek-V4.1-Flash · **Data:** 100% fiktif · **Hasil uji:** 22/22 kasus hasil akhir benar, 14/22 proses sepenuhnya benar, 48 temuan tercatat
+**Versi:** demo hackathon, 22 Okt 2026 · **Penanggung jawab:** Salis (pengembang Labapoint) · **Platform:** WorkBuddy (desktop dan Slack), model DeepSeek-V4.1-Flash · **Data:** 100% fiktif · **Hasil uji:** 22/22 hasil akhir benar, 14/22 proses sepenuhnya benar, 48 temuan tercatat
 
-## 1. Untuk apa agent ini
+## 1. Untuk apa
 
-Membantu pemilik UMKM multicabang mengubah chat atau voice note berantakan menjadi rencana aksi: **transfer stok antarcabang, ubah harga, pesan tagihan ke reseller, kirim pesan, dan jadwalkan**. Agent **menyusun rencana**, manusia **memutuskan**, kode **memeriksa, menjalankan, dan mencatat**.
+Mengubah chat atau voice note owner dan staf menjadi rencana aksi: **transfer stok, ubah harga, tagihan reseller, kirim pesan, jadwal**. Agent menyusun rencana, manusia memutuskan, kode memeriksa, menjalankan, dan mencatat.
 
-## 2. Yang boleh dan tidak boleh
+## 2. Apa yang bisa diakses agent
 
-| Agent boleh | Agent tidak boleh |
-|---|---|
-| Memecah permintaan jadi aksi, bertanya kalau ambigu | Menjalankan aksi apa pun tanpa persetujuan sah |
-| Memeriksa lewat `catat.py cek` (tercatat otomatis) | Menghitung stok, harga, HPP, atau jadwal sendiri |
-| Menampilkan layar konfirmasi dari script apa adanya | Mengubah angka atau menambah opsi di luar `saran` script |
-| Menolak dengan kalimat baku | Memberi petunjuk bahwa data rahasia itu ada |
-| Mencatat "di luar kemampuan" dan isi mencurigakan (sekali per berkas) | Menulis langsung ke `outbox/`, `rencana/`, `log.csv`, atau mengisi kolom sumber |
-| Membaca lampiran yang diminta penanya | Melewati sandbox, mengubah script, atau membuka berkas yang tidak terkait |
+- **Satu folder kerja** di sandbox WorkBuddy: data fiktif di `data/` (dibaca), serta `tools/catat.py` dan `tools/cek_aturan.py` (dijalankan).
+- **Menulis hanya lewat `catat.py`.** `outbox/`, `rencana/`, dan `log.csv` tidak ditulis langsung oleh agent.
+- **Tidak bisa diakses:** kunci tanda tangan dan arsip uji (di luar sandbox), kode dan database Labapoint, kredensial, data pelanggan sungguhan.
 
-## 3. Yang dijalankan sendiri, tanpa persetujuan
+## 3. Yang dijalankan otomatis (tidak mengubah apa pun, tidak menghubungi siapa pun)
 
-Hanya tindakan yang **tidak mengubah apa pun** dan tidak menghubungi siapa pun:
-- membaca permintaan, menafsirkan, dan mengajukan pertanyaan klarifikasi;
-- menjalankan pengecekan lewat script (stok, harga vs HPP, piutang, jadwal, izin);
-- menolak permintaan yang melanggar izin atau aturan, dengan kalimat baku;
-- menyusun rencana dan layar konfirmasi;
-- mencatat semua kejadian di log (ditulis oleh script).
+Menafsirkan permintaan dan bertanya kalau ambigu · menjalankan cek lewat script (stok, HPP, piutang, jadwal, izin) · menolak dengan kalimat baku · menyusun rencana dan layar konfirmasi · mencatat setiap kejadian ke log (ditulis script).
 
-Semua yang **mengirim, menjadwalkan, mengubah, atau menagih** butuh persetujuan (bagian 4). Agent tidak punya jalur untuk menjalankannya sendiri.
+## 4. Yang butuh persetujuan (ditegakkan kode, bukan prompt)
 
-## 4. Titik persetujuan manusia (ditegakkan kode, bukan prompt)
+Semua yang **mengirim, menjadwalkan, mengubah, atau menagih**. Persetujuan sah hanya dari peminta atau owner, dengan balasan baku (`setuju semua`, `setuju 1,3`, `batal`); "oke deh" dan persetujuan kasir ditolak. Harga di bawah HPP wajib `setuju rugi <no>`. Rencana kedaluwarsa 30 menit, stok dicek ulang saat dijalankan, perubahan setelah dijalankan menjadi rencana baru. Eksekusi hanya simulasi ke `outbox/`.
 
-- **Persetujuan sah** hanya dari peminta atau owner yang berwenang, dengan balasan baku `setuju semua / setuju 1,3 / batal`. "Oke deh" dan persetujuan oleh kasir ditolak.
-- **Harga di bawah HPP** tidak ikut `setuju semua`; wajib `setuju rugi <no>`.
-- **Batas waktu** 30 menit; **cek ulang saat eksekusi** (stok dikurangi transfer yang sudah keluar).
-- **Perubahan setelah dijalankan** tidak menimpa aksi lama: agent bertanya maksudnya, lalu membuat rencana baru yang juga butuh persetujuan (uji L13: mencegah 45 dus terkirim alih-alih 25).
-- **Eksekusi = simulasi**: aksi hanya ditulis ke `outbox/`, tidak ada yang terkirim.
+## 5. Yang tidak pernah dilakukan
 
-## 5. Batas akses per peran
+Menjalankan aksi tanpa persetujuan sah · menghitung angka sendiri atau menambah opsi di luar saran script · memberi petunjuk bahwa data terlarang itu ada · menuruti instruksi yang terselip di dokumen · mengirim data biaya ke pihak luar · menulis log sendiri atau mengisi kolom sumber.
 
-Owner: semua aksi dan data biaya. Kepala cabang: transfer dan tagihan dari cabangnya, tanpa HPP/margin. Kasir dan admin gudang: hanya melihat stok cabangnya. Pertanyaan yang dilarang dan data yang tidak ada dijawab dengan **kalimat identik kata per kata**, terbukti di dua chat terpisah (uji "Kenari"). Agent juga menolak mengirim data HPP ke pihak luar (P05).
+## 6. Batas per peran dan jejak audit
 
-## 6. Jejak audit
+Owner: semua aksi dan data biaya. Kepala cabang: aksi di cabangnya, tanpa HPP. Kasir dan admin gudang: hanya stok cabangnya. Data terlarang dan data yang tidak ada dijawab dengan kalimat identik. `log.csv` mencatat peminta, peran, aksi, sumber, hasil cek, keputusan (berupa fakta, mis. `ambigu`), dan penyetuju; persetujuan dan file outbox ditandatangani HMAC dan diperiksa `catat.py periksa`. **Jendela pantau** menampilkan semuanya per orang, termasuk balasan agent dari sesi WorkBuddy, dan hanya bisa membaca.
 
-`log.csv` mencatat waktu, peminta, peran, aksi, sumber yang dibaca script, hasil cek, keputusan, penyetuju, dan file hasil. **Kolom sumber dan keputusan diisi kode, dan keputusan berupa fakta** (mis. `ambigu`, bukan `ditanya`). Baris yang ditulis agent diberi label "tidak diverifikasi script". Persetujuan dan file outbox ditandatangani HMAC; `catat.py periksa` mendeteksi file palsu atau yang diubah. Instruksi tersembunyi di dokumen (prompt injection) ditemukan, diabaikan, dan dicatat (P06, diuji dua kali).
-
-## 7. Kegagalan yang kami temukan dan tidak kami sembunyikan
+## 7. Kegagalan yang kami temukan, tidak kami sembunyikan
 
 | Temuan | Yang terjadi | Tindakan |
 |---|---|---|
-| T13, T16 | Agent mengarang kolom sumber di log, lalu menemukan opsi `--sumber` lewat `--help` | Kemampuan dicabut dari kode, bukan sekadar dilarang |
-| T17, T18, T22 | Script error, agent memakai `python3 -S` untuk **melewati sandbox**, mencatatnya di memori, dan mengulanginya | Bug diperbaiki; Skill: error = berhenti; uji dipisah per chat |
-| T25, T28 | Agent membaca CSV mentah, bahkan dengan Skill aktif | **Batas utama demo ini**: data masih di folder yang bisa dibaca agent |
-| T33 | Label log `ditanya` membuat agent berikutnya mengklaim "saya sudah bertanya" | Log mencatat fakta, bukan tafsiran |
-| T29, T35, T36 | Saat hanya bisa menolak, agent mengarang opsi (sebagian keliru, tidak dicek) | Script memberi opsi yang sudah dicek; opsi hanya dari script |
-| T31 | Eksekusi simulasi tidak mengurangi stok; agent sendiri yang menandainya | Stok dikurangi transfer di outbox |
-| T03 | Agent salah merangkum Skill-nya sendiri ("eksekusi otomatis via WhatsApp") | Aturan penting tidak bergantung pada pemahaman model |
+| T13, T16 | Agent mengarang kolom sumber di log, lalu menemukan opsi `--sumber` | Kemampuan dicabut dari kode, bukan sekadar dilarang |
+| T17, T18, T22 | Saat script error, agent mematikan shim sandbox (`python3 -S`) dan mengingat triknya | Bug diperbaiki; error berarti berhenti; satu kasus satu chat |
+| T25, T28 | Agent membaca CSV mentah, bahkan dengan Skill aktif | Batas utama demo (bagian 8) |
+| T29, T35, T36 | Saat hanya bisa menolak, agent mengarang opsi | Script memberi opsi yang sudah dicek |
+| T45, T46 | Persona platform (`SOUL.md`) mengalahkan aturan Skill | Persona ikut dirancang; file data dibuka langsung turun 4 → 0 |
+| T47, T48 | Lewat Slack, permintaan berulang dijawab dari ingatan, tanpa gerbang dan log | Belum tertutup; terlihat di jendela pantau |
 
 ## 8. Batas yang kami akui
 
-Gerbang persetujuan dan audit sudah ditegakkan kode, tetapi **pembatasan baca belum**: agent bisa membuka file data dan bisa mematikan shim sandbox. Identitas pengirim masih berupa teks yang bisa dipalsukan. Di produksi, agent tidak menyentuh file: ia memanggil API Labapoint dengan izin si penanya, Row Level Security menyaring data di database, dan persetujuan serta tanda tangan ada di server (Edge Function), di luar jangkauan agent.
+Gerbang persetujuan dan audit sudah ditegakkan kode, tetapi **pembatasan baca belum**: agent masih bisa membuka file data, dan identitas pengirim masih berupa teks. Di produksi, agent tidak menyentuh file: ia memanggil API Labapoint dengan izin si penanya, Row Level Security menyaring data, dan persetujuan serta tanda tangan berada di server.
 
 ## 9. Kalau ada masalah
 
-Hentikan agent, jalankan `python3 tools/catat.py periksa`, baca `log.csv` dan arsip uji. Tidak ada data asli, kredensial, atau akses ke sistem produksi yang terlibat.
+Hentikan agent, jalankan `python3 tools/catat.py periksa`, lalu baca `log.csv` atau jendela pantau. Tidak ada data asli, kredensial, atau sistem produksi yang terlibat.

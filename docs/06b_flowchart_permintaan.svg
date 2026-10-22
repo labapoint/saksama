@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1080" width="1600" height="1080" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+    <marker id="aho" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#B45309"/>
+    </marker>
+    <marker id="ahr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#B91C1C"/>
+    </marker>
+  </defs>
+  <style>
+    .t{font-size:28px;font-weight:700;fill:#0F172A}
+    .st{font-size:15px;fill:#475569}
+    .lh{font-size:16px;font-weight:700}
+    .ls{font-size:13px;fill:#475569}
+    .b{font-size:15px;font-weight:700;fill:#0F172A}
+    .s{font-size:13px;fill:#475569}
+    .d{font-size:15px;font-weight:700;fill:#0F172A}
+    .y{font-size:13px;font-weight:700;fill:#15803D}
+    .n{font-size:13px;font-weight:700;fill:#B91C1C}
+    .a{font-size:13px;fill:#334155}
+    .ln{stroke:#334155;stroke-width:2;fill:none}
+    .lno{stroke:#B45309;stroke-width:2.5;fill:none}
+    .lnr{stroke:#B91C1C;stroke-width:2;fill:none}
+  </style>
+
+  <rect width="1600" height="1080" fill="#FFFFFF"/>
+  <text x="40" y="52" class="t">Saksama: alur satu permintaan</text>
+  <text x="40" y="80" class="st">Contoh: owner minta transfer stok. Belah ketupat = titik keputusan. Keputusan soal aturan dan persetujuan ada di kolom kode, bukan di kolom agent.</text>
+
+  <!-- LANES -->
+  <rect x="40" y="104" width="320" height="896" fill="#EFF6FF"/>
+  <rect x="380" y="104" width="360" height="896" fill="#F8FAFC"/>
+  <rect x="760" y="104" width="460" height="896" fill="#FFFBEB"/>
+  <rect x="1240" y="104" width="320" height="896" fill="#F0FDF4"/>
+  <text x="56" y="132" class="lh" fill="#1D4ED8">MANUSIA</text>
+  <text x="56" y="152" class="ls">memberi perintah dan izin</text>
+  <text x="396" y="132" class="lh" fill="#334155">AGENT (LLM)</text>
+  <text x="396" y="152" class="ls">memahami dan menyampaikan</text>
+  <text x="776" y="132" class="lh" fill="#B45309">KODE (catat.py, cek_aturan.py)</text>
+  <text x="776" y="152" class="ls">memeriksa, memutuskan, menjalankan</text>
+  <text x="1256" y="132" class="lh" fill="#15803D">HASIL DAN JEJAK</text>
+  <text x="1256" y="152" class="ls">ditulis kode, bukan agent</text>
+
+  <!-- 1 Kirim pesan -->
+  <rect x="70" y="180" width="260" height="64" rx="12" fill="#FFFFFF" stroke="#2563EB" stroke-width="2"/>
+  <text x="88" y="207" class="b">Kirim pesan</text>
+  <text x="88" y="228" class="s">"Kirim 20 dus nugget ke Pasuruan"</text>
+
+  <!-- D1 Ambigu? -->
+  <polygon points="560,250 660,300 560,350 460,300" fill="#FFFFFF" stroke="#334155" stroke-width="2"/>
+  <text x="560" y="305" class="d" text-anchor="middle">Ambigu?</text>
+  <path class="ln" d="M330 212 L560 212 L560 248" marker-end="url(#ah)"/>
+
+  <!-- tanya balik -->
+  <rect x="70" y="270" width="260" height="64" rx="12" fill="#FFFFFF" stroke="#2563EB" stroke-width="2"/>
+  <text x="88" y="297" class="b">Jawab pertanyaan</text>
+  <text x="88" y="318" class="s">"Nugget yang 1 kg"</text>
+  <path class="ln" d="M460 300 L332 300" marker-end="url(#ah)"/>
+  <text x="372" y="292" class="y">ya, tanya</text>
+  <path class="ln" d="M200 270 L200 246" marker-end="url(#ah)"/>
+
+  <!-- cek aturan -->
+  <path class="ln" d="M560 350 L560 422 L858 422" marker-end="url(#ah)"/>
+  <text x="570" y="386" class="y">tidak</text>
+  <rect x="860" y="390" width="260" height="64" rx="12" fill="#FFFFFF" stroke="#B45309" stroke-width="2"/>
+  <text x="878" y="417" class="b">Cek aturan</text>
+  <text x="878" y="438" class="s">stok · HPP · jadwal · izin</text>
+
+  <!-- D2 Lolos? -->
+  <polygon points="990,480 1100,530 990,580 880,530" fill="#FFFFFF" stroke="#B45309" stroke-width="2.5"/>
+  <text x="990" y="535" class="d" text-anchor="middle">Lolos aturan?</text>
+  <path class="ln" d="M990 454 L990 478" marker-end="url(#ah)"/>
+
+  <rect x="430" y="498" width="260" height="64" rx="12" fill="#FFFFFF" stroke="#334155" stroke-width="2"/>
+  <text x="448" y="525" class="b">Sampaikan penolakan</text>
+  <text x="448" y="546" class="s">kalimat baku + opsi dari script</text>
+  <path class="lnr" d="M880 530 L692 530" marker-end="url(#ahr)"/>
+  <text x="790" y="522" class="n">tidak</text>
+
+  <!-- rencana -->
+  <path class="ln" d="M990 580 L990 618" marker-end="url(#ah)"/>
+  <text x="1000" y="604" class="y">ya</text>
+  <rect x="860" y="620" width="260" height="64" rx="12" fill="#FFFFFF" stroke="#B45309" stroke-width="2"/>
+  <text x="878" y="647" class="b">Susun rencana</text>
+  <text x="878" y="668" class="s">+ layar konfirmasi</text>
+
+  <rect x="430" y="620" width="260" height="64" rx="12" fill="#FFFFFF" stroke="#334155" stroke-width="2"/>
+  <text x="448" y="647" class="b">Tampilkan apa adanya</text>
+  <text x="448" y="668" class="s">lalu berhenti dan menunggu</text>
+  <path class="ln" d="M860 652 L692 652" marker-end="url(#ah)"/>
+
+  <rect x="70" y="620" width="260" height="64" rx="12" fill="#FFFFFF" stroke="#2563EB" stroke-width="2"/>
+  <text x="88" y="647" class="b">Balas</text>
+  <text x="88" y="668" class="s">"setuju 1,3" atau "batal"</text>
+  <path class="ln" d="M430 652 L332 652" marker-end="url(#ah)"/>
+
+  <!-- teruskan -->
+  <rect x="430" y="758" width="260" height="64" rx="12" fill="#FFFFFF" stroke="#334155" stroke-width="2"/>
+  <text x="448" y="785" class="b">Teruskan balasan</text>
+  <text x="448" y="806" class="s">apa adanya, tanpa menilai</text>
+  <path class="ln" d="M200 684 L200 790 L428 790" marker-end="url(#ah)"/>
+
+  <!-- D3 Sah? -->
+  <polygon points="990,735 1110,790 990,845 870,790" fill="#FFFFFF" stroke="#B45309" stroke-width="3"/>
+  <text x="990" y="795" class="d" text-anchor="middle">Persetujuan sah?</text>
+  <path class="lno" d="M690 790 L868 790" marker-end="url(#aho)"/>
+
+  <rect x="430" y="846" width="260" height="104" rx="10" fill="#FFFBEB" stroke="#B45309" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="446" y="870" class="a" font-weight="700">Sah hanya jika:</text>
+  <text x="446" y="890" class="a">• dari peminta atau owner</text>
+  <text x="446" y="908" class="a">• format baku, belum kedaluwarsa</text>
+  <text x="446" y="926" class="a">• di bawah HPP: "setuju rugi n"</text>
+
+  <rect x="1270" y="758" width="260" height="64" rx="12" fill="#FFFFFF" stroke="#B91C1C" stroke-width="2"/>
+  <text x="1288" y="785" class="b">Ditolak</text>
+  <text x="1288" y="806" class="s">rencana tidak berubah</text>
+  <path class="lnr" d="M1110 790 L1268 790" marker-end="url(#ahr)"/>
+  <text x="1150" y="782" class="n">tidak</text>
+
+  <!-- jalankan -->
+  <path class="lno" d="M990 845 L990 878" marker-end="url(#aho)"/>
+  <text x="1000" y="868" class="y">ya</text>
+  <rect x="860" y="880" width="260" height="64" rx="12" fill="#FFFFFF" stroke="#B45309" stroke-width="2"/>
+  <text x="878" y="907" class="b">Cek ulang, lalu jalankan</text>
+  <text x="878" y="928" class="s">stok bisa sudah berubah</text>
+
+  <rect x="1270" y="880" width="260" height="64" rx="12" fill="#FFFFFF" stroke="#15803D" stroke-width="2"/>
+  <text x="1288" y="907" class="b">outbox/ (simulasi)</text>
+  <text x="1288" y="928" class="s">+ tanda tangan HMAC</text>
+  <path class="lno" d="M1120 912 L1268 912" marker-end="url(#aho)"/>
+
+  <!-- log -->
+  <rect x="1270" y="180" width="260" height="520" rx="12" fill="#FFFFFF" stroke="#15803D" stroke-width="2"/>
+  <text x="1288" y="210" class="b">log.csv</text>
+  <text x="1288" y="232" class="s">Setiap langkah kode dicatat:</text>
+  <text x="1288" y="266" class="a">• ambigu</text>
+  <text x="1288" y="290" class="a">• ditolak aturan atau izin</text>
+  <text x="1288" y="314" class="a">• rencana menunggu</text>
+  <text x="1288" y="338" class="a">• persetujuan sah atau tidak</text>
+  <text x="1288" y="362" class="a">• dijalankan atau gagal cek ulang</text>
+  <text x="1288" y="402" class="s">Dibaca jendela pantau</text>
+  <text x="1288" y="422" class="s">dan bisa diperiksa dengan</text>
+  <text x="1288" y="442" class="s">"catat.py periksa"</text>
+  <path class="ln" d="M1120 422 L1268 422" stroke-dasharray="5 4" marker-end="url(#ah)"/>
+  <path class="ln" d="M1120 652 L1268 652" stroke-dasharray="5 4" marker-end="url(#ah)"/>
+
+  <!-- footer -->
+  <line x1="40" y1="1030" x2="90" y2="1030" class="ln"/>
+  <text x="100" y="1035" class="a">alur</text>
+  <line x1="160" y1="1030" x2="210" y2="1030" class="lno"/>
+  <text x="220" y="1035" class="a">lewat gerbang persetujuan</text>
+  <line x1="430" y1="1030" x2="480" y2="1030" class="lnr"/>
+  <text x="490" y="1035" class="a">ditolak</text>
+  <line x1="570" y1="1030" x2="620" y2="1030" class="ln" stroke-dasharray="5 4"/>
+  <text x="630" y="1035" class="a">dicatat ke log</text>
+</svg>

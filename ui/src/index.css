@@ -87,3 +87,17 @@ button,
 [role='button'] {
   cursor: pointer;
 }
+
+/* Panel jejak audit di layar sempit masuk dari kanan. */
+@keyframes geser-masuk {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+/* Drawer menu di mobile masuk dari kiri. */
+@keyframes geser-masuk-kiri {
+  from {
+    transform: translateX(-100%);
+  }
+}

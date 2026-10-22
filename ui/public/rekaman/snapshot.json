@@ -1,0 +1,269 @@
+{
+ "folder": "saksama",
+ "ada": true,
+ "dibaca": "2026-10-22T05:27:57.601Z",
+ "log": [
+  {
+   "waktu": "2026-10-21T21:45:13+07:00",
+   "id_rencana": "",
+   "no_aksi": "",
+   "peminta": "Bu Sari",
+   "peran": "owner",
+   "jenis": "cari",
+   "detail": "Kirim 40 dus nugget sosis 500 g dari Gresik ke Pasuruan",
+   "sumber_dibaca": "produk_harga_hpp.csv",
+   "hasil_cek": "tidak_ada",
+   "keputusan": "tidak_ada",
+   "disetujui_oleh": "",
+   "waktu_setuju": "",
+   "file_outbox": "",
+   "catatan": "Tidak ada produk yang cocok dengan 'nugget sosis 500 g'."
+  },
+  {
+   "waktu": "2026-10-21T21:45:25+07:00",
+   "id_rencana": "",
+   "no_aksi": "",
+   "peminta": "Bu Sari",
+   "peran": "owner",
+   "jenis": "transfer",
+   "detail": "Kirim 40 dus nugget sosis 500 g dari Gresik ke Pasuruan",
+   "sumber_dibaca": "izin.csv kontak.csv stok_per_cabang.csv",
+   "hasil_cek": "ditolak_aturan",
+   "keputusan": "ditolak_aturan",
+   "disetujui_oleh": "",
+   "waktu_setuju": "",
+   "file_outbox": "",
+   "catatan": "Stok SS500 di Gresik hanya 8, diminta 40."
+  },
+  {
+   "waktu": "2026-10-22T06:45:08+07:00",
+   "id_rencana": "",
+   "no_aksi": "",
+   "peminta": "Dimas",
+   "peran": "kasir",
+   "jenis": "stok",
+   "detail": "Cek berapa stok nugget saat ini",
+   "sumber_dibaca": "izin.csv kontak.csv stok_per_cabang.csv",
+   "hasil_cek": "ambigu",
+   "keputusan": "ambigu",
+   "disetujui_oleh": "",
+   "waktu_setuju": "",
+   "file_outbox": "",
+   "catatan": "Ada 2 produk yang cocok. Tanyakan ke penanya."
+  },
+  {
+   "waktu": "2026-10-22T06:50:13+07:00",
+   "id_rencana": "",
+   "no_aksi": "",
+   "peminta": "Dimas",
+   "peran": "kasir",
+   "jenis": "stok",
+   "detail": "cek Nugget Ayam 500 g, lalu berapa HPP produk tersebut?",
+   "sumber_dibaca": "izin.csv kontak.csv stok_per_cabang.csv",
+   "hasil_cek": "ok",
+   "keputusan": "dijawab",
+   "disetujui_oleh": "",
+   "waktu_setuju": "",
+   "file_outbox": "",
+   "catatan": "Stok NA500 di Gresik: Gresik 12."
+  },
+  {
+   "waktu": "2026-10-22T06:50:13+07:00",
+   "id_rencana": "",
+   "no_aksi": "",
+   "peminta": "Dimas",
+   "peran": "kasir",
+   "jenis": "margin",
+   "detail": "cek Nugget Ayam 500 g, lalu berapa HPP produk tersebut?",
+   "sumber_dibaca": "izin.csv kontak.csv",
+   "hasil_cek": "tidak_ada",
+   "keputusan": "tidak_ada",
+   "disetujui_oleh": "",
+   "waktu_setuju": "",
+   "file_outbox": "",
+   "catatan": "Tidak ada data yang bisa ditampilkan untuk penanya ini."
+  },
+  {
+   "waktu": "2026-10-22T06:55:31+07:00",
+   "id_rencana": "",
+   "no_aksi": "",
+   "peminta": "Dimas",
+   "peran": "kasir",
+   "jenis": "",
+   "detail": "Minta dipesankan tiket pergi ke Jakarta, 'besok senin' (pesan diterima Kamis 22 Okt 2026)",
+   "sumber_dibaca": "",
+   "hasil_cek": "",
+   "keputusan": "di_luar_kemampuan",
+   "disetujui_oleh": "",
+   "waktu_setuju": "",
+   "file_outbox": "",
+   "catatan": "[dicatat agent, tidak diverifikasi script]"
+  }
+ ],
+ "rencana": [],
+ "outbox": [],
+ "stok": {},
+ "produk": {
+  "NA500": "Nugget Ayam 500 g",
+  "NA1K": "Nugget Ayam 1 kg",
+  "SS500": "Sosis Sapi 500 g"
+ },
+ "kontak": [
+  {
+   "nama": "Bu Sari",
+   "peran": "owner",
+   "cabang": ""
+  },
+  {
+   "nama": "Wulan",
+   "peran": "kepala_cabang",
+   "cabang": "Gresik"
+  },
+  {
+   "nama": "Dimas",
+   "peran": "kasir",
+   "cabang": "Gresik"
+  },
+  {
+   "nama": "Komang",
+   "peran": "kepala_cabang",
+   "cabang": "Denpasar"
+  },
+  {
+   "nama": "Pak Budi Santoso",
+   "peran": "admin_gudang",
+   "cabang": "Gresik"
+  },
+  {
+   "nama": "Pak Budi Hartono",
+   "peran": "kepala_cabang",
+   "cabang": "Pasuruan"
+  },
+  {
+   "nama": "Bu Ani Rahayu",
+   "peran": "reseller",
+   "cabang": "Gresik"
+  },
+  {
+   "nama": "Bu Ani Lestari",
+   "peran": "reseller",
+   "cabang": "Probolinggo"
+  },
+  {
+   "nama": "Pak Joko",
+   "peran": "reseller",
+   "cabang": "Pasuruan"
+  }
+ ],
+ "percakapan": [
+  {
+   "id": "68bd0aad-3-u",
+   "sesi": "68bd0aad",
+   "kanal": "slack",
+   "peran": "pengguna",
+   "pengirim": "Bu Sari",
+   "waktu": "2026-10-21T21:39:17+07:00",
+   "teks": "Kirim 50 dus nugget 1 kg dari Gresik ke Pasuruan."
+  },
+  {
+   "id": "68bd0aad-3-a",
+   "sesi": "68bd0aad",
+   "kanal": "slack",
+   "peran": "agent",
+   "pengirim": "Bu Sari",
+   "waktu": "2026-10-21T21:39:30+07:00",
+   "teks": "Bu Sari, permintaan ini sudah diperiksa dua kali dan hasilnya tetap sama:\n\nStok Nugget Ayam 1 kg (NA1K) di Gresik hanya 34 dus — tidak bisa memenuhi 50 dus. Aksi ini ditolak oleh aturan stok dan tidak bisa masuk rencana.\n\nOpsi yang lolos pengecekan:\n\n1. Kirim 34 dus dari Gresik saja (kurang 16 dus).\n2. Gabungan: 34 dari Gresik + 15 dari Denpasar (WITA) = 49 dus (kurang 1 dus).\n\nKalau mau lanjut, silakan pilih salah satu opsi di atas dengan jawaban seperti \"opsi 1\" atau \"opsi 2\". Kalau ada keputusan lain, silakan sampaikan."
+  },
+  {
+   "id": "68bd0aad-4-u",
+   "sesi": "68bd0aad",
+   "kanal": "slack",
+   "peran": "pengguna",
+   "pengirim": "Bu Sari",
+   "waktu": "2026-10-21T21:42:29+07:00",
+   "teks": "Kirim 50 dus nugget 1 kg dari Gresik ke Pasuruan."
+  },
+  {
+   "id": "68bd0aad-4-a",
+   "sesi": "68bd0aad",
+   "kanal": "slack",
+   "peran": "agent",
+   "pengirim": "Bu Sari",
+   "waktu": "2026-10-21T21:42:41+07:00",
+   "teks": "Bu Sari, ini permintaan yang sama seperti sebelumnya. Stok Nugget Ayam 1 kg di Gresik tetap 34 dus — tidak bisa memenuhi 50 dus. Hasilnya tidak berubah.\n\nSaya tidak bisa memproses permintaan ini tanpa penyesuaian jumlah. Silakan pilih:\n\n1. Kirim 34 dus dari Gresik saja (kurang 16 dus).\n2. Gabungan: 34 dari Gresik + 15 dari Denpasar (WITA) = 49 dus (kurang 1 dus).\n\nAtau sampaikan keputusan lain kalau ada."
+  },
+  {
+   "id": "68bd0aad-5-u",
+   "sesi": "68bd0aad",
+   "kanal": "slack",
+   "peran": "pengguna",
+   "pengirim": "Bu Sari",
+   "waktu": "2026-10-21T21:44:59+07:00",
+   "teks": "Kirim 40 dus nugget sosis 500 g dari Gresik ke Pasuruan."
+  },
+  {
+   "id": "68bd0aad-5-a",
+   "sesi": "68bd0aad",
+   "kanal": "slack",
+   "peran": "agent",
+   "pengirim": "Bu Sari",
+   "waktu": "2026-10-21T21:45:30+07:00",
+   "teks": "Bu Sari, produk \"nugget sosis 500 g\" tidak ada di data. Yang cocok adalah **Sosis Sapi 500 g** (SKU: SS500). Stoknya di Gresik hanya 8 dus — jauh dari 40 dus yang diminta.\n\nOpsi yang lolos pengecekan:\n\n1. Kirim 8 dus Sosis Sapi 500 g dari Gresik saja (kurang 32 dus).\n\nKalau produk yang dimaksud bukan Sosis Sapi 500 g, mohon konfirmasi nama produk yang benar. Silakan pilih atau sampaikan keputusan lain."
+  },
+  {
+   "id": "75bc53bb-0-u",
+   "sesi": "75bc53bb",
+   "kanal": "workbuddy",
+   "peran": "pengguna",
+   "pengirim": "Dimas",
+   "waktu": "2026-10-22T06:44:49+07:00",
+   "teks": "Cek berapa stok nugget saat ini"
+  },
+  {
+   "id": "75bc53bb-0-a",
+   "sesi": "75bc53bb",
+   "kanal": "workbuddy",
+   "peran": "agent",
+   "pengirim": "Dimas",
+   "waktu": "2026-10-22T06:45:11+07:00",
+   "teks": "Ada 2 produk yang namanya cocok dengan \"nugget\":\n\n1. Nugget Ayam 500 g (SKU NA500)\n2. Nugget Ayam 1 kg (SKU NA1K)\n\nYang mana yang mau dicek stoknya?"
+  },
+  {
+   "id": "75bc53bb-1-u",
+   "sesi": "75bc53bb",
+   "kanal": "workbuddy",
+   "peran": "pengguna",
+   "pengirim": "Dimas",
+   "waktu": "2026-10-22T06:49:57+07:00",
+   "teks": "cek Nugget Ayam 500 g, lalu berapa HPP produk tersebut?"
+  },
+  {
+   "id": "75bc53bb-1-a",
+   "sesi": "75bc53bb",
+   "kanal": "workbuddy",
+   "peran": "agent",
+   "pengirim": "Dimas",
+   "waktu": "2026-10-22T06:50:16+07:00",
+   "teks": "**Stok Nugget Ayam 500 g (NA500)**\n- Gresik: 12 dus\n\nSumber: `izin.csv`, `kontak.csv`, `stok_per_cabang.csv`\n\nSaya tidak menemukan informasi itu di data yang bisa saya akses. Untuk pertanyaan ini, silakan hubungi Bu Sari."
+  },
+  {
+   "id": "c6646f61-0-u",
+   "sesi": "c6646f61",
+   "kanal": "workbuddy",
+   "peran": "pengguna",
+   "pengirim": "Dimas",
+   "waktu": "2026-10-22T06:55:10+07:00",
+   "teks": "Saya besok senin mau pergi ke jakarta, bisa pesankan saya tiket?"
+  },
+  {
+   "id": "c6646f61-0-a",
+   "sesi": "c6646f61",
+   "kanal": "workbuddy",
+   "peran": "agent",
+   "pengirim": "Dimas",
+   "waktu": "2026-10-22T06:55:34+07:00",
+   "teks": "Ini di luar tugas yang bisa saya kerjakan. Saya catat sebagai pengingat untuk Dimas."
+  }
+ ],
+ "rekaman": true
+}

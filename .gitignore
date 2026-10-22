@@ -6,3 +6,6 @@ dist/
 workspace/rencana/*.json
 workspace/outbox/*.json
 workspace/.workbuddy-ai/
+
+# Foto avatar dari Magnific (stok berlisensi) hanya untuk demo lokal: lisensinya melarang distribusi file.
+ui/src/assets/avatars/*.jpg

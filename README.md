@@ -8,7 +8,7 @@ Prinsipnya: **prompt membentuk perilaku, kode menegakkan batas.** Model bahasa m
 
 Dibuat untuk Tencent Cloud Hackathon Indonesia 2026, Tantangan B (The Office Agent), pola *Meeting to action*.
 
-> **Prototipe hackathon, bukan fitur resmi Labapoint.** Semua data di repo ini fiktif, dan tidak ada kode, kredensial, atau data dari aplikasi Labapoint. Kelemahan agent yang ditemukan selama pengujian sengaja dicatat terbuka di [docs/temuan_uji.md](docs/temuan_uji.md).
+> **Prototipe fitur asisten yang sedang dikembangkan untuk Labapoint.** Versi ini berjalan terpisah dari aplikasinya: semua data di repo ini fiktif, dan tidak ada kode, kredensial, atau data pelanggan dari aplikasi Labapoint. Kelemahan agent yang ditemukan selama pengujian sengaja dicatat terbuka di [docs/temuan_uji.md](docs/temuan_uji.md).
 
 ![Diagram arsitektur](docs/06_diagram_arsitektur.png)
 
@@ -89,11 +89,11 @@ Dari file sesi hanya diambil teks pesan pengguna dan balasan akhir agent. Person
 | Dokumen | Isi |
 |---|---|
 | [Deskripsi proyek](docs/01_03_judul_blurb_deskripsi.md) | Masalah, solusi, desain prompt, dampak |
-| [Accountability sheet](docs/04_accountability_sheet.md) | Apa yang bisa diakses, yang otomatis, yang butuh persetujuan, yang tidak pernah dilakukan |
+| [Accountability sheet](docs/04_accountability_sheet.md) ([PDF](docs/04_accountability_sheet.pdf)) | Apa yang bisa diakses, yang otomatis, yang butuh persetujuan, yang tidak pernah dilakukan |
 | [Laporan hasil tes](docs/05_laporan_hasil_tes.md) | Kasus uji dan hasilnya |
-| [Arsitektur](docs/06_diagram_arsitektur.md) | Komponen, batas kepercayaan, trade-off |
+| [Arsitektur](docs/06_diagram_arsitektur.md) | Diagram arsitektur, alur satu permintaan, batas kepercayaan, trade-off |
 | [Temuan uji](docs/temuan_uji.md) | Catatan lengkap temuan selama pengujian, termasuk yang gagal |
 
 ## Aset
 
-Logo dan ikon menu di `ui/src/assets/logo/` dan `ui/src/assets/nav/` adalah merek milik Labapoint dan tidak termasuk lisensi kode repo ini. Sumber foto profil dicatat di [ui/src/assets/avatars/SUMBER.md](ui/src/assets/avatars/SUMBER.md).
+Logo dan ikon menu di `ui/src/assets/logo/` dan `ui/src/assets/nav/` adalah merek milik Labapoint dan tidak termasuk lisensi kode repo ini. Ikon antarmuka di `ui/src/assets/icons/` berasal dari [Iconly](https://iconly.pro) dan tunduk pada lisensi Iconly. Sumber foto profil dicatat di [ui/src/assets/avatars/SUMBER.md](ui/src/assets/avatars/SUMBER.md).
