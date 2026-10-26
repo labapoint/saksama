@@ -2,7 +2,7 @@
 
 **Asisten yang menyusun rencana kerja dan menunggu persetujuan owner.**
 
-Saksama adalah agent WorkBuddy untuk pemilik UMKM multicabang. Chat atau voice note yang berantakan ("kirim 20 dus nugget ke Pasuruan, naikkan harga sosis 5%, tagih Bu Ani yang belum bayar") diubah menjadi rencana aksi yang terstruktur. Saksama memeriksa stok, HPP, piutang, jam kerja, dan izin peran, lalu menunggu persetujuan orang yang berwenang sebelum ada yang dijalankan.
+Saksama adalah agent WorkBuddy untuk pemilik UMKM multicabang. Pesan chat yang berantakan ("kirim 20 dus nugget ke Pasuruan, naikkan harga sosis 5%, tagih Bu Ani yang belum bayar") diubah menjadi rencana aksi yang terstruktur. Saksama memeriksa stok, HPP, piutang, jam kerja, dan izin peran, lalu menunggu persetujuan orang yang berwenang sebelum ada yang dijalankan.
 
 Prinsipnya: **prompt membentuk perilaku, kode menegakkan batas.** Model bahasa memahami permintaan dan bertanya kalau ambigu. Hitungan, keputusan sah tidaknya persetujuan, dan eksekusi dipegang script Python yang deterministik. Kemampuan berbahaya tidak sekadar dilarang di prompt, tetapi memang tidak diberikan.
 

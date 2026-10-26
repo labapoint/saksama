@@ -1,6 +1,6 @@
 ---
 name: asisten-owner
-description: Asisten administrasi untuk pemilik usaha multi-cabang. Mengubah chat atau voice note berantakan menjadi daftar aksi (transfer stok, ubah harga, pesan tagihan, kirim dokumen, jadwal), memeriksa aturan dan izin, lalu meminta persetujuan sebelum menulis apa pun ke outbox. Pakai setiap kali ada permintaan tugas dari owner, kepala cabang, atau kasir.
+description: Asisten administrasi untuk pemilik usaha multi-cabang. Mengubah pesan chat yang berantakan menjadi daftar aksi (transfer stok, ubah harga, pesan tagihan, kirim dokumen, jadwal), memeriksa aturan dan izin, lalu meminta persetujuan sebelum menulis apa pun ke outbox. Pakai setiap kali ada permintaan tugas dari owner, kepala cabang, atau kasir.
 ---
 
 # Asisten Owner

@@ -6,6 +6,51 @@ import os from 'node:os'
 import { fileURLToPath } from 'node:url'
 import { bacaPercakapan } from './sesi.js'
 
+// Batas tampil: diatur tombol "Mulai dari nol" di UI. Disimpan di folder UI, bukan folder kerja,
+// supaya agent tidak pernah melihatnya dan tidak ada file kerja yang diubah atau dihapus.
+const FILE_BATAS = fileURLToPath(new URL('../.batas-tampil.json', import.meta.url))
+
+export function bacaBatas() {
+  try {
+    const { sejak } = JSON.parse(fs.readFileSync(FILE_BATAS, 'utf8'))
+    return Number.isFinite(Date.parse(sejak)) ? sejak : null
+  } catch {
+    return null
+  }
+}
+
+export function aturBatas(sejak) {
+  if (sejak) fs.writeFileSync(FILE_BATAS, JSON.stringify({ sejak }) + '\n')
+  else fs.rmSync(FILE_BATAS, { force: true })
+}
+
+// Saringan terbuka (ui/saring-pesan.json): hanya pesan sesi yang tercantum, lengkap dengan alasan
+// dan rujukan temuan, yang tidak ditampilkan. Log, rencana, dan outbox tidak pernah disaring.
+// Berlaku sama untuk mode live dan replay, dan jumlahnya selalu disebut di kartu pantau.
+const FILE_SARING = fileURLToPath(new URL('../saring-pesan.json', import.meta.url))
+
+function saringPesan(percakapan) {
+  let aturan = []
+  try {
+    aturan = JSON.parse(fs.readFileSync(FILE_SARING, 'utf8')).pesan || []
+  } catch {
+    return { percakapan, disaring: [] }
+  }
+  const cocok = (p, a) =>
+    p.kanal === a.kanal &&
+    p.waktu.startsWith(a.waktu) &&
+    p.teks.trim() === a.teks &&
+    (!a.pengirim || p.pengirim === a.pengirim) &&
+    (!a.peran || p.peran === a.peran)
+  const disaring = []
+  const sisa = percakapan.filter((p) => {
+    const a = aturan.find((x) => cocok(p, x))
+    if (a) disaring.push({ waktu: p.waktu, kanal: p.kanal, alasan: a.alasan, temuan: a.temuan })
+    return !a
+  })
+  return { percakapan: sisa, disaring }
+}
+
 // Default: folder workspace/ di repo ini. Arahkan SAKSAMA_DIR ke folder kerja WorkBuddy yang sebenarnya.
 export function folderKerja() {
   const env = process.env.SAKSAMA_DIR
@@ -67,7 +112,10 @@ function hitungStok(stokAwal, outbox) {
 
 export function bacaSnapshot(dir = folderKerja()) {
   const ada = fs.existsSync(dir)
-  const log = bacaCsv(path.join(dir, 'log.csv'))
+  const batas = bacaBatas()
+  const tBatas = batas ? Date.parse(batas) : -Infinity
+  const setelahBatas = (w) => !batas || Date.parse(w) >= tBatas
+  const log = bacaCsv(path.join(dir, 'log.csv')).filter((b) => setelahBatas(b.waktu))
   const rencana = bacaJsonFolder(path.join(dir, 'rencana'))
   const outbox = bacaJsonFolder(path.join(dir, 'outbox'))
   const stokAwal = bacaCsv(path.join(dir, 'data/stok_per_cabang.csv'))
@@ -75,18 +123,23 @@ export function bacaSnapshot(dir = folderKerja()) {
   // Kontak tanpa nomor/ID kanal: cukup nama, peran, dan cabang untuk daftar orang.
   const kontak = bacaCsv(path.join(dir, 'data/kontak.csv')).map(({ nama, peran, cabang }) => ({ nama, peran, cabang }))
   // Sesi WorkBuddy hanya sejak run ini: 10 menit sebelum baris log pertama. Log kosong = belum ada run.
+  // Kalau batas tampil diatur, chat ditampilkan tepat sejak batas itu, walau belum ada baris log.
   const awal = log.length ? Math.min(...log.map((b) => Date.parse(b.waktu)).filter(Number.isFinite)) : null
-  const percakapan = awal ? bacaPercakapan(dir, new Date(awal - 10 * 60e3).toISOString()) : []
+  const sejak = batas ? Math.max(tBatas, awal ? awal - 10 * 60e3 : tBatas) : awal ? awal - 10 * 60e3 : null
+  const { percakapan, disaring } = saringPesan(sejak ? bacaPercakapan(dir, new Date(sejak).toISOString()) : [])
   return {
     folder: path.basename(dir),
     ada,
     dibaca: new Date().toISOString(),
     log,
-    rencana: rencana.map(({ _file, ...r }) => r),
-    outbox: outbox.map(({ _file, ...o }) => ({ ...o, file: _file })),
+    batas,
+    rencana: rencana.filter((r) => setelahBatas(r.dibuat)).map(({ _file, ...r }) => r),
+    outbox: outbox.filter((o) => setelahBatas(o.dijalankan)).map(({ _file, ...o }) => ({ ...o, file: _file })),
+    // Saldo dihitung dari SEMUA transfer (termasuk yang disembunyikan) supaya angka stok tetap benar.
     stok: hitungStok(stokAwal, outbox),
     produk,
     kontak,
     percakapan,
+    disaring,
   }
 }

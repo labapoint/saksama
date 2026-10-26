@@ -1,4 +1,4 @@
-import { Lightbulb, Monitor, Moon, Sun, X } from './Ikon.jsx'
+import { Lampu, Monitor, Moon, Sun, X } from './Ikon.jsx'
 import DashboardIcon from '../assets/nav/dashboard.svg?react'
 import PosIcon from '../assets/nav/pos.svg?react'
 import OrdersIcon from '../assets/nav/orders.svg?react'
@@ -56,9 +56,9 @@ function PilihTema({ tema, onChange, horizontal }) {
             title={label}
             onClick={() => onChange(id)}
             className="flex size-9 items-center justify-center rounded-lg transition-colors"
-            style={aktif ? { background: 'var(--color-primary-12)', color: 'var(--color-primary-text)' } : { color: 'var(--color-app-muted)' }}
+            style={aktif ? { background: 'var(--color-primary-12)', color: 'var(--color-primary-text)' } : { color: 'var(--color-app-text)' }}
           >
-            <Icon className="size-[18px]" />
+            <Icon className="size-5" />
           </button>
         )
       })}
@@ -67,14 +67,14 @@ function PilihTema({ tema, onChange, horizontal }) {
 }
 
 // Logo resmi Labapoint:
-// wide max 32×150px, mark 32×32px. Varian putih di mode gelap.
+// wide max 32×150px, mark 36×36px. Varian putih di mode gelap.
 function Logo({ compact, dark }) {
   const src = compact ? (dark ? logoMarkWhite : logoMark) : dark ? logoWideWhite : logoWide
   return (
     <img
       src={src}
       alt="Labapoint"
-      style={compact ? { width: 32, height: 32, objectFit: 'contain' } : { maxHeight: 32, maxWidth: 150 }}
+      style={compact ? { width: 36, height: 36, objectFit: 'contain' } : { maxHeight: 32, maxWidth: 150 }}
     />
   )
 }
@@ -97,7 +97,7 @@ function Item({ item, active, collapsed, onSelect }) {
       }
       style={style}
     >
-      <Icon className={collapsed ? 'size-[22px]' : 'size-[18px]'} />
+      <Icon className="size-5" />
       {!collapsed && <span className="flex-1 text-left">{item.label}</span>}
       {!collapsed && item.badge && (
         <span
@@ -133,9 +133,9 @@ export default function Sidebar({ active, collapsed, onSelect, onToggle, dark, t
             aria-label={diDrawer ? 'Tutup menu' : 'Ciutkan sidebar'}
             onClick={onToggle}
             className="rounded-md p-1.5 hover:bg-[var(--color-sidebar-hover)]"
-            style={{ color: 'var(--color-sidebar-muted)' }}
+            style={{ color: 'var(--color-sidebar-fg)' }}
           >
-            {diDrawer ? <X className="size-5" /> : <CollapseIcon className="size-[18px]" />}
+            {diDrawer ? <X className="size-5" /> : <CollapseIcon className="size-5" />}
           </button>
         )}
       </div>
@@ -166,20 +166,23 @@ export default function Sidebar({ active, collapsed, onSelect, onToggle, dark, t
         className={'flex flex-col gap-2 border-t py-3 ' + (collapsed ? 'items-center px-2' : 'px-4')}
         style={{ borderColor: 'var(--color-sidebar-border)' }}
       >
-        <button
-          type="button"
-          onClick={onPanduan}
-          title={collapsed ? 'Lihat panduan halaman' : undefined}
-          aria-label="Lihat panduan halaman"
-          className={
-            'flex items-center rounded-md text-sm font-medium transition-colors hover:bg-[var(--color-sidebar-hover)] ' +
-            (collapsed ? 'size-10 justify-center' : 'w-full gap-3 px-3 py-2')
-          }
-          style={{ color: 'var(--color-sidebar-fg)' }}
-        >
-          <Lightbulb className={collapsed ? 'size-[22px]' : 'size-[18px]'} />
-          {!collapsed && <span>Lihat panduan</span>}
-        </button>
+        {/* Kartu yang sama dengan pemilih tema di bawahnya. */}
+        <div className="rounded-xl border p-1" style={{ borderColor: 'var(--color-app-line)', background: 'var(--card)' }}>
+          <button
+            type="button"
+            onClick={onPanduan}
+            title={collapsed ? 'Lihat panduan halaman' : undefined}
+            aria-label="Lihat panduan halaman"
+            className={
+              'flex h-9 items-center rounded-lg text-sm font-medium transition-colors hover:bg-[var(--color-app-bg-hint)] ' +
+              (collapsed ? 'w-9 justify-center' : 'w-full gap-2.5 px-2.5')
+            }
+            style={{ color: 'var(--color-app-text)' }}
+          >
+            <Lampu className="size-5 shrink-0" />
+            {!collapsed && <span>Lihat panduan</span>}
+          </button>
+        </div>
         <PilihTema tema={tema} onChange={onTema} horizontal={!collapsed} />
       </div>
 

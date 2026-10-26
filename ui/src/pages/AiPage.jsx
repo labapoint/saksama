@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
-import { ArrowLeft, DangerCircle, Paper, ShieldDone } from '../components/Ikon.jsx'
+import { ArrowLeft, Chat, DangerCircle, Paper } from '../components/Ikon.jsx'
 import AuditColumn from '../components/AuditColumn.jsx'
 import { KartuBalasan, KartuCatatan, KartuHasil, KartuRencana, KartuSistem, KartuTolak, Pesan } from '../components/Cards.jsx'
 import { daftarOrang, jam, kejadianUntukLog, kunciLog, susunFeed } from '../lib/feed.js'
@@ -8,6 +8,15 @@ import PeopleList from '../components/PeopleList.jsx'
 import { REPLAY, useSnapshot } from '../lib/useSnapshot.js'
 import Tur, { sudahDilihat } from '../components/Tur.jsx'
 import { langkahTur } from '../lib/turLangkah.js'
+
+function jamWib(iso) {
+  return new Date(iso).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Jakarta' }) + ' WIB'
+}
+
+// Batas tampil diatur lewat endpoint lokal di server dev. Header khusus wajib (lihat vite.config.js).
+async function aturBatas(aksi) {
+  await fetch('/api/batas', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Saksama': '1' }, body: JSON.stringify({ aksi }) })
+}
 
 function waktuRekam(iso) {
   return new Date(iso).toLocaleString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Jakarta' }) + ' WIB'
@@ -32,6 +41,7 @@ export default function AiPage({ onMenu, mintaPanduan, onPanduanDiterima }) {
 
   // Panduan muncul sekali di kunjungan pertama, setelah percakapan tampil; bisa diputar lagi lewat ikon lampu di sidebar.
   const [turJalan, setTurJalan] = useState(false)
+  const [konfirmasiNol, setKonfirmasiNol] = useState(false)
   const adaIsi = feed.length > 0
   useEffect(() => {
     if (!adaIsi || sudahDilihat()) return
@@ -88,7 +98,13 @@ export default function AiPage({ onMenu, mintaPanduan, onPanduanDiterima }) {
 
   return (
     <div className="flex h-full min-h-0 min-w-0">
-      <PeopleList orang={orang} pilihan={terpilih?.nama} onPilih={pilihOrang} onMenu={onMenu} tersembunyiDiMobile={diDetail} direkam={REPLAY && snap?.dibaca ? waktuRekam(snap.dibaca) : null} />
+      <PeopleList orang={orang} pilihan={terpilih?.nama} onPilih={pilihOrang} onMenu={onMenu} tersembunyiDiMobile={diDetail}
+        direkam={REPLAY && snap?.dibaca ? waktuRekam(snap.dibaca) : null}
+        disaring={snap?.disaring}
+        batas={snap?.batas ? jamWib(snap.batas) : null}
+        onMulaiNol={REPLAY ? null : () => setKonfirmasiNol(true)}
+        onTampilkanSemua={REPLAY ? null : () => aturBatas('hapus')}
+      />
       <section className={'min-h-0 min-w-0 flex-1 flex-col md:flex ' + (diDetail ? 'flex' : 'hidden')}>
         <header
           className="flex min-h-16 shrink-0 items-center justify-between gap-3 border-b px-4 py-3 md:min-h-20 md:gap-4 md:px-6"
@@ -154,6 +170,17 @@ export default function AiPage({ onMenu, mintaPanduan, onPanduanDiterima }) {
 
       </section>
 
+      {konfirmasiNol && (
+        <KonfirmasiNol
+          onBatal={() => setKonfirmasiNol(false)}
+          onYa={async () => {
+            setKonfirmasiNol(false)
+            setPilihan(null)
+            setDiDetail(false)
+            await aturBatas('mulai')
+          }}
+        />
+      )}
       {turJalan && <Tur langkah={langkahTur({ rekaman: REPLAY })} onSelesai={() => setTurJalan(false)} />}
       {auditTerbuka && <AuditColumn log={snap?.log} orang={terpilih?.nama} aktif={sorot?.log} onPilih={bukaLog} onTutup={() => setAuditTerbuka(false)} />}
     </div>
@@ -218,17 +245,49 @@ function Galat({ pesan }) {
 
 function EmptyState() {
   return (
-    <div className="mx-auto mt-16 max-w-md text-center">
+    <div className="mx-auto w-full max-w-5xl rounded-xl border px-6 py-8 text-center" style={{ borderColor: 'var(--color-app-line)', background: 'var(--card)' }}>
       <div
         className="mx-auto flex size-12 items-center justify-center rounded-[10px]"
         style={{ background: 'var(--color-primary-12)', color: 'var(--color-primary-text)' }}
       >
-        <ShieldDone className="size-6" />
+        <Chat className="size-6" />
       </div>
       <h2 className="mt-4 text-base font-semibold">Belum ada percakapan</h2>
       <p className="mt-1 text-sm" style={{ color: 'var(--color-app-muted)' }}>
         Setiap permintaan owner, rencana, persetujuan, dan hasilnya akan muncul di sini.
       </p>
+    </div>
+  )
+}
+
+// Konfirmasi sebelum menyembunyikan isi lama. Tidak ada file yang dihapus: yang berubah hanya
+// batas waktu tampil, dan bisa dibatalkan lewat "Tampilkan semua".
+function KonfirmasiNol({ onBatal, onYa }) {
+  useEffect(() => {
+    const tekan = (e) => e.key === 'Escape' && onBatal()
+    window.addEventListener('keydown', tekan)
+    return () => window.removeEventListener('keydown', tekan)
+  }, [onBatal])
+  return (
+    <div className="fixed inset-0 z-[80] flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-black/40" onClick={onBatal} aria-hidden="true" />
+      <div role="dialog" aria-modal="true" aria-label="Mulai dari nol" className="relative w-full max-w-sm rounded-xl p-5 shadow-xl" style={{ background: 'var(--card)', color: 'var(--color-app-text)' }}>
+        <p className="text-base font-bold">Mulai dari nol?</p>
+        <p className="mt-2 text-sm leading-5">
+          Chat dan jejak audit sebelum saat ini disembunyikan dari jendela pantau. Tidak ada file yang dihapus, dan semuanya bisa ditampilkan lagi lewat "Tampilkan semua".
+        </p>
+        <p className="mt-2 text-sm leading-5" style={{ color: 'var(--color-app-muted)' }}>
+          Ingatan agent tidak ikut terhapus. Untuk demo yang bersih, mulai juga chat baru di WorkBuddy atau Slack.
+        </p>
+        <div className="mt-5 flex justify-end gap-2">
+          <button type="button" onClick={onBatal} className="h-9 rounded-lg border px-3.5 text-sm font-medium transition-colors hover:bg-[var(--color-app-bg-hint)]" style={{ borderColor: 'var(--color-app-line)' }}>
+            Batal
+          </button>
+          <button type="button" onClick={onYa} className="h-9 rounded-lg px-3.5 text-sm font-medium transition-opacity hover:opacity-90" style={{ background: 'var(--color-primary)', color: 'var(--color-primary-fg)' }}>
+            Mulai dari nol
+          </button>
+        </div>
+      </div>
     </div>
   )
 }

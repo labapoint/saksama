@@ -20,6 +20,7 @@
   --color-chat-user: color-mix(in srgb, var(--color-primary) 6%, transparent);
   --color-chat-ai: #f9f9f9;
   --color-panel-bg: #fafafa;
+  --color-empty-bg: #f5f6f8;
   --card: #ffffff;
 
   --color-app-success: #10b981;
@@ -57,6 +58,7 @@
   --color-chat-user: color-mix(in srgb, var(--color-primary) 16%, transparent);
   --color-chat-ai: #232326;
   --color-panel-bg: #111113;
+  --color-empty-bg: #1c1c1f;
   --color-sidebar-bg: #09090b;
   --card: #171717;
 

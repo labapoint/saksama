@@ -4,7 +4,7 @@
 
 ## 1. Untuk apa
 
-Mengubah chat atau voice note owner dan staf menjadi rencana aksi: **transfer stok, ubah harga, tagihan reseller, kirim pesan, jadwal**. Agent menyusun rencana, manusia memutuskan, kode memeriksa, menjalankan, dan mencatat.
+Mengubah pesan chat owner dan staf menjadi rencana aksi: **transfer stok, ubah harga, tagihan reseller, kirim pesan, jadwal**. Agent menyusun rencana, manusia memutuskan, kode memeriksa, menjalankan, dan mencatat.
 
 ## 2. Apa yang bisa diakses agent
 

@@ -1,4 +1,4 @@
-import { Menu, Show } from './Ikon.jsx'
+import { DuaOrang, Menu, RefreshLeft, Show } from './Ikon.jsx'
 import Avatar from './Avatar.jsx'
 
 const LABEL_PERAN = {
@@ -32,7 +32,7 @@ function Baris({ aktif, onClick, avatar, judul, sub }) {
   )
 }
 
-export default function PeopleList({ orang, pilihan, onPilih, onMenu, tersembunyiDiMobile, direkam }) {
+export default function PeopleList({ orang, pilihan, onPilih, onMenu, tersembunyiDiMobile, direkam, disaring, batas, onMulaiNol, onTampilkanSemua }) {
   return (
     <aside
       className={'w-full shrink-0 flex-col md:flex md:w-[220px] lg:w-[280px] md:border-r ' + (tersembunyiDiMobile ? 'hidden' : 'flex')}
@@ -48,14 +48,20 @@ export default function PeopleList({ orang, pilihan, onPilih, onMenu, tersembuny
         >
           <Menu className="size-6" />
         </button>
-        <div>
+        <div className="min-w-0">
           <h2 className="text-lg font-bold tracking-tight">Percakapan</h2>
-          <p className="text-xs" style={{ color: 'var(--color-app-muted)' }}>
+          <p className="truncate text-xs" style={{ color: 'var(--color-app-muted)' }}>
             Per orang yang memberi perintah
           </p>
         </div>
       </div>
       <div className="flex flex-1 flex-col gap-2 overflow-y-auto px-4 py-3 md:px-3 lg:px-5">
+        {orang.length === 0 && (
+          <div className="flex flex-col items-center gap-2 rounded-xl px-4 py-5 text-center text-sm" style={{ background: 'var(--color-empty-bg)', color: 'var(--color-app-muted)' }}>
+            <DuaOrang className="size-6" />
+            Nama pengirim akan tampil di sini
+          </div>
+        )}
         <div data-tur="daftar-orang" className="flex flex-col gap-2">
         {orang.map((o) => (
           <Baris
@@ -88,9 +94,39 @@ export default function PeopleList({ orang, pilihan, onPilih, onMenu, tersembuny
               </>
             )}
           </div>
+          {/* Live dan replay sama: pesan yang disaring selalu disebut, tidak pernah hilang diam-diam. */}
+          {disaring?.length > 0 && (
+            <p className="mt-1 text-sm" style={{ color: 'var(--color-app-text)' }}>
+              {disaring.length} pesan di luar skenario tidak ditampilkan. Alasannya dicatat terbuka di temuan {[...new Set(disaring.map((d) => d.temuan))].join(', ')}.
+            </p>
+          )}
           <p className="mt-1.5 text-xs" style={{ color: 'var(--color-app-muted)' }}>
             Semua isi dibaca dari file yang ditulis gerbang <b style={{ color: 'var(--color-app-text)' }}>catat.py</b>: permintaan, rencana, persetujuan, dan hasil. Tidak ada yang dikarang atau diubah di sini.
           </p>
+          {/* Kontrol tampilan (live saja): menyembunyikan isi lama tanpa menghapus file. */}
+          {onMulaiNol && (
+            <div className="mt-3 border-t pt-3" style={{ borderColor: 'var(--color-app-line)' }}>
+              {batas && (
+                <p className="mb-2 text-xs" style={{ color: 'var(--color-app-muted)' }}>
+                  Ditampilkan sejak {batas}.{' '}
+                  {onTampilkanSemua && (
+                    <button type="button" onClick={onTampilkanSemua} className="font-semibold hover:underline" style={{ color: 'var(--color-primary-text)' }}>
+                      Tampilkan semua
+                    </button>
+                  )}
+                </p>
+              )}
+              <button
+                type="button"
+                onClick={onMulaiNol}
+                className="inline-flex h-8 items-center gap-1.5 rounded-lg border px-2.5 text-xs font-medium transition-colors hover:bg-[var(--color-app-bg-hint)]"
+                style={{ borderColor: 'var(--color-app-line)', color: 'var(--color-app-text)' }}
+              >
+                <RefreshLeft className="size-4" />
+                Mulai dari nol
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </aside>

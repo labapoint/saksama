@@ -12,7 +12,7 @@
 
 ## 3. Deskripsi proyek
 
-**Tantangan:** B, The Office Agent. **Pola:** *Meeting to action*, yaitu notulen, chat, dan voice note owner diubah menjadi aksi toko yang menunggu persetujuan. **Pengguna:** pemilik UMKM multicabang dan staf cabangnya (kepala cabang, kasir).
+**Tantangan:** B, The Office Agent. **Pola:** *Meeting to action*, yaitu notulen dan chat owner diubah menjadi aksi toko yang menunggu persetujuan. **Pengguna:** pemilik UMKM multicabang dan staf cabangnya (kepala cabang, kasir).
 
 ### Masalah
 
@@ -24,7 +24,7 @@ Mulai 16 Januari 2027, PP 33/2026 mewajibkan perusahaan menilai dampak perlindun
 
 ### Solusi
 
-**Saksama** adalah agent di WorkBuddy yang mengubah chat atau voice note menjadi **rencana aksi**, lalu berhenti dan meminta persetujuan. Prinsipnya: **agent menyusun rencana, manusia memutuskan, kode menjalankan.**
+**Saksama** adalah agent di WorkBuddy yang mengubah pesan chat menjadi **rencana aksi**, lalu berhenti dan meminta persetujuan. Prinsipnya: **agent menyusun rencana, manusia memutuskan, kode menjalankan.**
 
 Alurnya:
 1. **Pahami dan pecah.** Satu pesan dipecah menjadi aksi: transfer stok, ubah harga, pesan tagihan, kirim pesan, atau jadwal.

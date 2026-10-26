@@ -9,3 +9,6 @@ workspace/.workbuddy-ai/
 
 # Foto avatar hanya untuk demo lokal (stok berlisensi, tidak boleh didistribusikan ulang).
 ui/src/assets/avatars/
+
+# Batas tampil jendela pantau (tombol "Mulai dari nol"), khusus komputer ini.
+ui/.batas-tampil.json

@@ -13,5 +13,5 @@ if (!snap.ada) {
 const tujuan = new URL('../public/rekaman/snapshot.json', import.meta.url)
 fs.writeFileSync(tujuan, JSON.stringify({ ...snap, rekaman: true }, null, 1))
 console.log(
-  `Rekaman disimpan: ${snap.log.length} baris log, ${snap.rencana.length} rencana, ${snap.outbox.length} outbox, ${snap.percakapan.length} pesan sesi.`,
+  `Rekaman disimpan: ${snap.log.length} baris log, ${snap.rencana.length} rencana, ${snap.outbox.length} outbox, ${snap.percakapan.length} pesan sesi (${snap.disaring.length} disaring, lihat ui/saring-pesan.json).`,
 )

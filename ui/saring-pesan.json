@@ -1,0 +1,21 @@
+{
+  "keterangan": "Pesan sesi yang tidak ditampilkan di jendela pantau (live maupun replay). Hanya percakapan yang disaring; log.csv, rencana, dan outbox tidak pernah diubah. Setiap entri wajib punya alasan dan rujukan temuan, dan jumlahnya selalu disebut di kartu pantau.",
+  "pesan": [
+    {
+      "kanal": "slack",
+      "waktu": "2026-10-22T19:09",
+      "pengirim": "Bu Sari",
+      "teks": "Batal",
+      "alasan": "Di luar skenario video. Tidak ada rencana yang bisa dibatalkan; agent berpikir lama tanpa memanggil alat dan dihentikan manual.",
+      "temuan": "T49"
+    },
+    {
+      "kanal": "slack",
+      "waktu": "2026-10-22T19:10",
+      "peran": "agent",
+      "teks": "Interrupted by user",
+      "alasan": "Balasan dari giliran yang dihentikan manual (lihat entri di atas).",
+      "temuan": "T49"
+    }
+  ]
+}
