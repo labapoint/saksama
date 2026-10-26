@@ -1,0 +1,10 @@
+// Cloudflare Worker untuk jendela pantau versi replay (rekaman sesi uji, hanya baca).
+// Build: npm run build:replay → dist/. Worker hanya menyajikan file statis; tidak ada kode server.
+{
+  "name": "saksama",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}
